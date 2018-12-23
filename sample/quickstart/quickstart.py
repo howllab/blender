@@ -25,9 +25,33 @@ def quickstart():
     for i in matList:
         print(i.name)
 
-# data create / remove  
-mesh = bpy.data.meshes.new(name="MyMesh")
-meshList = bpy.data.meshes
-for i in meshList:
+    # data create / remove  
+    mesh = bpy.data.meshes.new(name="MyMesh")
+    meshList = bpy.data.meshes
+    for i in meshList:
+        print(i.name)
+        bpy.data.meshes.remove(i)
+
+# custom properties
+# create cube and select object tab
+contextList = bpy.context.object
+print(contextList)
+
+bpy.context.object["MyOwnProperty"] = 42
+
+if "MyOwnProperty" in bpy.context.object:
+    print("Property found")
+
+value = bpy.data.objects["Cube"].get("MyOwnProperty", print("fallback"))
+print(value)
+
+ 
+# user basic types.    
+# only string keys are supported
+group = bpy.data.groups.new("MyTestGroup")
+group["GameSettings"]={"foo":10, "bar":"spam", "baz":{}}
+for i in bpy.data.groups:
     print(i.name)
-    bpy.data.meshes.remove(i)
+    print(i["GameSettings"]["foo"])
+    
+del group["GameSettings"]
